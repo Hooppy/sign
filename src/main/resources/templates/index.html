@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+
+<script>
+$(function(){
+	$('#signBtn').click(function(e){
+		
+		var params = {
+          	sname    : $("#sname").val(),
+            semail   : $("#semail").val()
+        }
+		
+		$.ajax({
+	    	type : "POST",           
+	        url : "/sign",      
+	        data : params,            
+	        success : function(res){
+	        	alert('서명 완료');
+	        	location.reload();
+	        },
+	        error : function(request, status, error){
+	            alert("서명 실패 " + request.responseText);
+	        }
+    	});
+    	
+	});
+})
+</script>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>어뭉청</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+    
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/css/index.css}" rel="stylesheet" />
+    
+</head>
+<body id="page-top" style="background-color: black;">
+	<section id="about">
+		<div class="user-wrap">
+			<div class="user-image">
+				<img th:src="@{/img/main-bg-1.png}" />
+			</div>
+		</div>
+		<div class="user-text">
+			<p>
+				<span th:text="${today}" /> 
+				현재 
+				<span th:text="${signPeople}" /> 
+				명 서명 완료
+			</p>
+			<p>
+				이름 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				<input type="text" id="sname" maxlength="10">
+			</p>
+			<p>
+				이메일 &nbsp;&nbsp;&nbsp;
+				<input type="text" id="semail" maxlength="30">
+			</p>
+			<button type="button" class="btn btn-light" id="signBtn">서명하기</button>
+		</div>
+    </section>
+</body>
+</html>
